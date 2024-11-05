@@ -35,7 +35,7 @@ public:
     
     void clear(bool resize)
     {
-        for_all(static_cast<void (cn::*)(uint32_t, uint32_t, bool)>(&cn::clear), resize);
+        for_all(static_cast<void (cn::*)(uint32_t, bool)>(&cn::clear), resize);
     }
     
     void clear(uint32_t in_chan, bool resize)
@@ -47,7 +47,7 @@ public:
     
     void reset()
     {
-        for_all(static_cast<void (cn::*)(uint32_t, uint32_t, bool)>(&cn::clear));
+        for_all(static_cast<void (cn::*)(uint32_t)>(&cn::reset));
     }
     
     convolve_error reset(uint32_t in_chan)
