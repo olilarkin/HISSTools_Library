@@ -280,7 +280,7 @@ double stat_variance(const T input, size_t size)
 template <class T>
 double stat_standard_deviation(const T input, size_t size)
 {
-    return sqrt(stat_variance(input, size));
+    return std::sqrt(stat_variance(input, size));
 }
 
 // PDF Percentile
@@ -314,7 +314,7 @@ template <class T>
 double stat_spread(const T input, size_t size)
 {
     double centroid = stat_centroid(input, size);
-    return sqrt(stat_weighted_sum(impl::indices_diff_op<impl::pow2>(centroid), input, size) / stat_sum(input, size));
+    return std::sqrt(stat_weighted_sum(impl::indices_diff_op<impl::pow2>(centroid), input, size) / stat_sum(input, size));
 }
 
 template <class T>
@@ -347,7 +347,7 @@ template <class T>
 double stat_log_spread(const T input, size_t size)
 {
     double centroid = stat_log_centroid(input, size);
-    return sqrt(stat_weighted_sum(impl::log_indices_diff_op<impl::pow2>(std::log2(centroid)), 
+    return std::sqrt(stat_weighted_sum(impl::log_indices_diff_op<impl::pow2>(std::log2(centroid)),
                                   input, size) / stat_sum(input, size));
 }
 
@@ -382,7 +382,7 @@ double stat_flatness(const T input, size_t size)
 template <class T>
 double stat_rms(const T input, size_t size)
 {
-    return sqrt(stat_mean_squares(input, size));
+    return std::sqrt(stat_mean_squares(input, size));
 }
 
 // Crest
