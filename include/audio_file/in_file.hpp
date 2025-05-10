@@ -437,14 +437,14 @@ private:
         
         // Retrieve relevant data
         
-        uint16_t format_byte = get_u16(chunk, header_endianness());
+        uint16_t format_code = get_u16(chunk, header_endianness());
         uint16_t bit_depth = get_u16(chunk + 14, header_endianness());
         
         // WAVE_FORMAT_EXTENSIBLE
         
-        if (format_byte == 0xFFFE)
+        if (format_code == 0xFFFE)
         {
-            format_byte = get_u16(chunk + 24, header_endianness());
+            format_code = get_u16(chunk + 24, header_endianness());
             
             constexpr unsigned char guid[14]
                             = { 0x00, 0x00, 0x00, 0x00, 0x10, 0x00, 0x80, 0x00, 0x00, 0xAA, 0x00, 0x38, 0x9B, 0x71 };
@@ -455,10 +455,10 @@ private:
         
         // Check for a valid format byte (currently PCM or float only)
         
-        if (format_byte != 0x0001 && format_byte != 0x0003)
+        if (format_code != 0x0001 && format_code != 0x0003)
             return error_type::wav_fmt_unsupported;
         
-        numeric_type type = format_byte == 0x0003 ? numeric_type::floating : numeric_type::integer;
+        numeric_type type = format_code == 0x0003 ? numeric_type::floating : numeric_type::integer;
         
         m_num_channels = get_u16(chunk + 2, header_endianness());
         m_sampling_rate = get_u32(chunk + 4, header_endianness());
