@@ -429,10 +429,10 @@ private:
         
         // Search for the format chunk and read the format chunk as needed, checking for a valid size
         
-        if (!(find_chunk("fmt ", chunk_size)) || (chunk_size != 16 && chunk_size != 18 && chunk_size != 40))
+        if (!(find_chunk("fmt ", chunk_size) || chunk_size < 16))
             return error_type::fmt_bad;
         
-        if (!read_chunk(chunk, chunk_size, chunk_size))
+        if (!read_chunk(chunk, std::min(chunk_size, uint32_t(40)), chunk_size))
             return error_type::fmt_bad;
         
         // Retrieve relevant data
@@ -444,6 +444,9 @@ private:
         
         if (format_code == 0xFFFE)
         {
+            if (chunk_size < 40)
+                return error_type::fmt_bad;
+
             format_code = get_u16(chunk + 24, header_endianness());
             
             constexpr unsigned char guid[14]
