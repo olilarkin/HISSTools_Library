@@ -97,9 +97,9 @@ public:
     {
         std::vector<error_type> errors;
         
-        for (int i = 0; i <= static_cast<int>(error_type::write_failed); i++)
+        for (int i = 1; i <= static_cast<int>(error_type::write_failed); i <<= 1)
         {
-            if (flags & (1 << i))
+            if (flags & i)
                 errors.push_back(static_cast<error_type>(i));
         }
         
