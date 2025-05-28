@@ -454,7 +454,7 @@ private:
         
         // Check if writing to all channels
         
-        const bool all_channels = !(channel >= 0 && num_channels > 1);
+        const bool all_channels = !(channel >= 0 && channels() > 1);
         
         // Write zeros to channels if necessary (multichannel files are written one channel at a time)
         
