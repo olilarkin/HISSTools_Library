@@ -426,11 +426,13 @@ private:
     {
         // FIX - issues of value (note 1 might be clipped by one value - what to do?)
         
-        const uint32_t max_val = 1 << ((N * 8) - 1);
+        const T max_val = static_cast<T>(1 << ((N * 8) - 1));
         
         value = std::round(value * static_cast<T>(max_val));
         
-        return static_cast<uint32_t>(std::min(std::max(value, static_cast<T>(-max_val)), static_cast<T>(max_val - 1)));
+        int32_t typed_value = static_cast<int32_t>(std::min(std::max(value, -max_val), max_val - 1));
+        
+        return *(reinterpret_cast<uint32_t*>(&typed_value));
     }
     
     template <class T, class U, int N, class V>
