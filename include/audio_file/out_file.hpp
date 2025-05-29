@@ -407,7 +407,7 @@ private:
     static T convert(V value, T, U)
     {
         U typed_value = static_cast<U>(value);
-        return* (reinterpret_cast<T*>(&typed_value));
+        return *(reinterpret_cast<T*>(&typed_value));
     }
     
     template <int N, class T>
