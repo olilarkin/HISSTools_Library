@@ -564,13 +564,13 @@ namespace HISSTools
     {
         // FIX - issues of value (note 1 might be clipped by one value - what to do?)
         
-        const uint32_t maxVal = 1 << (bitDepth - 1);
+        const double maxVal = static_cast<double>(1 << (bitDepth - 1));
         
         input = round(input * static_cast<double>(maxVal));
         
-        std::min(std::max(input, static_cast<double>(-maxVal)), static_cast<double>(maxVal - 1));
+        int32_t typedValue = static_cast<int32_t>(std::min(std::max(input, -maxVal), maxVal - 1));
 
-        return static_cast<uint32_t>(input);
+        return *(reinterpret_cast<uint32_t*>(&typedValue));
     }
     
     uint8_t OAudioFile::inputToU8(double input)
