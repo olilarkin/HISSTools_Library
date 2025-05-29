@@ -522,7 +522,7 @@ private:
             if (!all_channels)
                 m_file.seekp(pos);
             
-            write_internal(reinterpret_cast<const char*>(m_buffer.data()), loop_frames * frame_byte_count());
+            success &= write_internal(reinterpret_cast<const char*>(m_buffer.data()), loop_frames * frame_byte_count());
             
             num_frames -= loop_frames;
             input += loop_samples;
